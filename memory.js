@@ -10,6 +10,7 @@ $( document ).ready(function() {
         this.value = val;
         this.$el = $('<span>' + val + '</span>');
         this.$el.on('click', this.flip.bind(this));
+        this.resolved = false;
     };
 
     Tile.prototype.hide = function () {
@@ -17,6 +18,7 @@ $( document ).ready(function() {
     }
     Tile.prototype.remove = function () {
         this.$el.remove();
+        this.isResolved = true;
     }
 
     Tile.prototype.flip = function() {
@@ -43,9 +45,22 @@ $( document ).ready(function() {
             window.setTimeout( function() {
                 $.each( flippedTiles, resultHandler );
                 flippedTiles = [];
+                if ( gameOver() ) {
+                    window.console.log( "game over" )
+                }
             }, 1000 );
         }
     };
+
+    function gameOver() {
+        var status = true;
+        $.each( tiles, function () {
+            if ( !this.isResolved ) {
+                status = false;
+            }
+        })
+        return status;
+    }
 
     // Create a tile for each token
     for ( var i = 0, l = tokens.length; i < l; i += 1 ) {
