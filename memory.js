@@ -15,21 +15,33 @@ $( document ).ready(function() {
     Tile.prototype.hide = function () {
         this.$el.removeClass( "flipped" );
     }
+    Tile.prototype.remove = function () {
+        this.$el.remove();
+    }
 
     Tile.prototype.flip = function() {
+        var resultHandler;
         this.$el.addClass('flipped');
         flippedTiles.push( this );
         if ( flippedTiles.length > 1 ) {
             window.console.log( flippedTiles );
             if ( flippedTiles[ 0 ].value === flippedTiles[ 1 ].value ) {
                 window.console.log( "match" );
+                resultHandler = function() {
+                    $.each( flippedTiles, function() {
+                        this.remove();
+                    });
+                };
             } else {
                 window.console.log( "no match" );
+                resultHandler = function() {
+                    $.each( flippedTiles, function() {
+                        this.hide();
+                    });
+                };
             }
             window.setTimeout( function() {
-                $.each( flippedTiles, function() {
-                    this.hide();
-                });
+                $.each( flippedTiles, resultHandler );
                 flippedTiles = [];
             }, 1000 );
         }
