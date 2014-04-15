@@ -3,7 +3,8 @@ $( document ).ready(function() {
     var board = $( "#board" ),
         boardSections = $( "#board td" ),
         tiles = [],
-        tokens = [ "A", "B" ];
+        tokens = [ "A", "B" ],
+        flippedTiles = [];
 
     var Tile = function(val){
         this.value = val;
@@ -11,8 +12,27 @@ $( document ).ready(function() {
         this.$el.on('click', this.flip.bind(this));
     };
 
-    Tile.prototype.flip = function(){
-        this.$el.toggleClass('flipped');
+    Tile.prototype.hide = function () {
+        this.$el.removeClass( "flipped" );
+    }
+
+    Tile.prototype.flip = function() {
+        this.$el.addClass('flipped');
+        flippedTiles.push( this );
+        if ( flippedTiles.length > 1 ) {
+            window.console.log( flippedTiles );
+            if ( flippedTiles[ 0 ].value === flippedTiles[ 1 ].value ) {
+                window.console.log( "match" );
+            } else {
+                window.console.log( "no match" );
+            }
+            window.setTimeout( function() {
+                $.each( flippedTiles, function() {
+                    this.hide();
+                });
+                flippedTiles = [];
+            }, 1000 );
+        }
     };
 
     // Create a tile for each token
