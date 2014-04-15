@@ -1,13 +1,24 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Memory exercise</title>
-		
-    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-    <script src="memory.js"></script>
-    <style>
-		table{position:absolute;left:100px;top:50px;}
-		td{border:3px solid blue;}
+<head>
+  <title>Memory exercise</title>
+	
+  <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+  <script src="memory.js"></script>
+  <style>
+  	#board {
+      margin: 0 auto;
+    }
+    span {
+      display: block;
+      font-size: 2em;
+      padding: 1.5em 2em;
+      background-color: #ccc;
+      color: #ccc;
+    }
+    .flipped {
+      background-color: #333;
+    }
 	</style>
   </head>
   <body>
